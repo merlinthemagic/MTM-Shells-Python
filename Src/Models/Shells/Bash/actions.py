@@ -1,6 +1,4 @@
-"""
-Mirrors Src/Models/Shells/Bash/Actions.php
-"""
+
 import re
 
 from .initialization import Initialization

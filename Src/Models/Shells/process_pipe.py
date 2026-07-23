@@ -1,15 +1,4 @@
-"""
-Mirrors Src/Models/Shells/ProcessPipe.php
 
-The PHP original wrote to / read from plain files on disk (stdIn as a named
-FIFO, stdOut/stdErr as regular files), hand-tracking byte offsets, because
-PHP had to shell out to a detached `python3 -c "pty.spawn(...)"` process to
-get a pty at all. Since this port *is* Python, we skip that indirection and
-talk to a real pty master file descriptor directly - it behaves like a
-terminal: writes go to the child's stdin, and a read returns whatever new
-output the child has produced (stdout+stderr combined, like a real terminal
-session). No manual offset bookkeeping is required.
-"""
 import os
 
 

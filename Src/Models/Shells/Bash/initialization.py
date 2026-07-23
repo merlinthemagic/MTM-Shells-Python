@@ -1,16 +1,4 @@
-"""
-Mirrors Src/Models/Shells/Bash/Initialization.php
 
-The PHP original built its "base pipes" by shelling out to a detached
-`python3 -c "pty.spawn(['bash'])"` process wired up to hand-rolled FIFO/files
-on disk, plus a whole guard-process/PID-tracking scheme to clean up an
-orphaned shell if the PHP process died uncleanly. Since this port already
-runs inside Python, we get a pty directly via the stdlib `pty` module and
-attach `bash` (or `sudo -n bash`) to it with `subprocess.Popen` - no
-intermediary process, no files on disk, no manual PID bookkeeping. Cleanup on
-crash is handled by `atexit`/`__del__` in Base instead of an external watcher
-process.
-"""
 import fcntl
 import os
 import pty

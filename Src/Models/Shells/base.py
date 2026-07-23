@@ -1,9 +1,6 @@
-"""
-Mirrors Src/Models/Shells/Base.php
-"""
+
 import atexit
 import uuid
-
 
 class Base:
 

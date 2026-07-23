@@ -1,6 +1,4 @@
-"""
-Mirrors Src/Models/Shells/Bash/Termination.php
-"""
+
 import os
 import re
 import signal

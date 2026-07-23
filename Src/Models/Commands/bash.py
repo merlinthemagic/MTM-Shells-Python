@@ -1,10 +1,7 @@
-"""
-Mirrors Src/Models/Commands/Bash.php
-"""
+
 import re
 
 from .base import Base
-
 
 class Bash(Base):
 

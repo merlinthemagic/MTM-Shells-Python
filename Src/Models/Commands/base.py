@@ -1,6 +1,4 @@
-"""
-Mirrors Src/Models/Commands/Base.php
-"""
+
 import time
 import uuid
 

@@ -1,6 +1,4 @@
-"""
-Mirrors Src/Models/Shells/Bash/Processing.php
-"""
+
 from .termination import Termination
 
 

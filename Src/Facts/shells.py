@@ -1,5 +1,5 @@
 from .base import Base
-from ..Models.Shells.bash.actions import Actions as _BashActions
+from ..Models.Shells.Bash.actions import Actions as _BashActions
 
 class Shells(Base):
     def getBash(self, use_sudo=False):
