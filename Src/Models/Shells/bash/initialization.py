@@ -34,16 +34,16 @@ class Initialization(Processing):
         self._base_pipes = None
         super().__init__()
 
-    def set_sudo(self, use_sudo):
+    def setSudo(self, use_sudo):
         self._use_sudo = use_sudo
         return self
 
-    def get_regex(self):
+    def getRegex(self):
         if self._reg_ex is None:
             self._reg_ex = "[bash." + os.urandom(8).hex() + "]"
         return self._reg_ex
 
-    def get_commit(self):
+    def getCommit(self):
         if self._commit_chars is None:
             self._commit_chars = chr(13)
         return self._commit_chars
@@ -53,13 +53,13 @@ class Initialization(Processing):
             self._init_active = True
             try:
                 # set the prompt to a known value
-                str_cmd = 'PS1="' + self.get_regex() + '"'
-                reg_ex = "(" + re.escape(self.get_regex()) + ")"
+                str_cmd = 'PS1="' + self.getRegex() + '"'
+                reg_ex = "(" + re.escape(self.getRegex()) + ")"
 
                 r_tries = 10
                 while True:
                     try:
-                        self.get_cmd(str_cmd, reg_ex).get()
+                        self.getCmd(str_cmd, reg_ex).get()
                         break  # success
                     except Exception:
                         if r_tries > 0:
@@ -71,16 +71,16 @@ class Initialization(Processing):
 
                 # ssh connections (and some ptys) won't inherit a sane
                 # terminal width from the parent
-                self.set_terminal_size(1000, 1000)
+                self.setTerminalSize(1000, 1000)
 
                 # don't record a history for this session
-                self.get_cmd("unset HISTFILE").get()
+                self.getCmd("unset HISTFILE").get()
 
                 # disable bracketed paste for the current session
-                self.get_cmd("bind 'set enable-bracketed-paste 0'").get()
+                self.getCmd("bind 'set enable-bracketed-paste 0'").get()
 
                 # reset the output so we have a clean beginning
-                self.get_pipes().reset_std_out()
+                self.getPipes().resetStdOut()
 
                 self._is_init = True
                 self._init_active = False
@@ -91,7 +91,7 @@ class Initialization(Processing):
     def _get_base_pipes(self):
         if self._base_pipes is None:
 
-            if self.get_parent() is not None:
+            if self.getParent() is not None:
                 raise RuntimeError("Has parent, cannot be base")
             elif self._is_term is True:
                 raise RuntimeError("Cannot establish base pipes, shell terminated")

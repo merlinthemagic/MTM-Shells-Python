@@ -13,11 +13,11 @@ class Bash(Base):
         self._check_line = 0
 
     def _check_data(self):
-        delim = self.get_delimitor()
+        delim = self.getDelimitor()
         if delim:
             # we just want a hit, the order of the lines does not matter
             found = False
-            lines = self.get_data().split("\n")
+            lines = self.getData().split("\n")
             l_id = 0
             for l_id, line in enumerate(lines):
                 if self._check_line <= l_id:
@@ -27,19 +27,19 @@ class Bash(Base):
             if found is False and l_id > 0:
                 self._check_line = l_id - 1
             elif found is True:
-                if re.search(delim, self.get_return_data(), re.S):
-                    self.set_done()
+                if re.search(delim, self.getReturnData(), re.S):
+                    self.setDone()
 
-        if self.get_is_done() is False and self.get_run_time() > self.get_timeout():
+        if self.getIsDone() is False and self.getRunTime() > self.getTimeout():
             if not delim:
                 # we wanted to read until time ran out
-                self.set_done()
+                self.setDone()
             else:
-                self.set_error(RuntimeError("Bash: Command read timeout"))
+                self.setError(RuntimeError("Bash: Command read timeout"))
 
     def _parse(self):
         data = self._remove_command()
-        delim = self.get_delimitor()
+        delim = self.getDelimitor()
         lines = data.split("\n")
         if len(lines) > 0 and delim:
             # locate the delimiter in the return - faster to start from the bottom
@@ -51,7 +51,7 @@ class Bash(Base):
                 if m:
                     group1 = m.group(1) or ""
                     group2 = m.group(2) or ""
-                    if re.escape(self.get_parent().get_regex()) != delim:
+                    if re.escape(self.getParent().getRegex()) != delim:
                         # user supplied a custom regex: include both the data and the match
                         lines[idx] = group1 + group2
                     elif len(group1.strip()) > 0:
@@ -71,27 +71,27 @@ class Bash(Base):
 
     def _remove_command(self):
         # Command string removal from the returned data
-        data = self.get_data()
-        str_cmd = self.get_cmd()
+        data = self.getData()
+        str_cmd = self.getCmd()
         if str_cmd is not None:
             str_cmd = str_cmd.strip()
             lines = data.split("\n")
             if len(lines) > 0:
 
-                parent = self.get_parent()
-                if parent.is_init() is True:
+                parent = self.getParent()
+                if parent.isInit() is True:
                     # there could be leftover junk on the terminal before the
                     # command was issued, so allow a longer string to match
                     # before giving up
-                    term_width = parent.get_terminal_size(False)["width"]
+                    term_width = parent.getTerminalSize(False)["width"]
                     p_init = True
                 else:
                     term_width = None
                     p_init = False
 
-                cmd_len = len(self.get_cmd().strip())
+                cmd_len = len(self.getCmd().strip())
                 max_len = cmd_len * 3
-                remain_cmd = self.get_cmd()
+                remain_cmd = self.getCmd()
                 cmd_line = ""
                 result_lines = lines
 

@@ -9,22 +9,22 @@ class Test(Base):
 
         try:
             print("== whoami ==")
-            print(shell.get_cmd("whoami").get())
+            print(shell.getCmd("whoami").get())
 
             print("== cd /var && pwd ==")
-            shell.get_cmd("cd /var").get()
-            print(shell.get_cmd("pwd").get())
+            shell.getCmd("cd /var").get()
+            print(shell.getCmd("pwd").get())
 
             print("== ls -sh --color=none ==")
-            print(shell.get_cmd("ls -sh --color=none").get())
+            print(shell.getCmd("ls -sh --color=none").get())
 
             print("== echo exit code of `false` ==")
-            shell.get_cmd("false").get()
-            print(shell.get_cmd("echo $?").get())
+            shell.getCmd("false").get()
+            print(shell.getCmd("echo $?").get())
 
             print("== a command with a short timeout (expected to fail) ==")
             try:
-                shell.get_cmd("sleep 5", None, 500).get()
+                shell.getCmd("sleep 5", None, 500).get()
                 print("UNEXPECTED: command did not time out")
             except Exception as e:
                 print("Got expected timeout error:", e)
@@ -34,7 +34,7 @@ class Test(Base):
             time.sleep(5)
 
             print("== shell still usable after the timeout ==")
-            print(shell.get_cmd("echo still_alive").get())
+            print(shell.getCmd("echo still_alive").get())
 
             print("All checks passed.")
 

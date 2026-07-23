@@ -20,17 +20,17 @@ class ProcessPipe:
         self._process = process  # subprocess.Popen handle for the spawned bash
         self._lock = True        # kept for API parity with the PHP lock file
 
-    def get_lock(self):
+    def getLock(self):
         return self._lock
 
-    def set_lock(self, val):
+    def setLock(self, val):
         self._lock = val
         return self
 
-    def get_process(self):
+    def getProcess(self):
         return self._process
 
-    def get_master_fd(self):
+    def getMasterFd(self):
         return self._master_fd
 
     def write(self, data):
@@ -55,7 +55,7 @@ class ProcessPipe:
             raise RuntimeError("stdOut went away")
         return b"".join(chunks).decode("utf-8", errors="replace")
 
-    def reset_std_out(self):
+    def resetStdOut(self):
         """
         Discards any output currently sitting unread in the pty buffer (e.g.
         leftover bytes from a command that timed out before we finished

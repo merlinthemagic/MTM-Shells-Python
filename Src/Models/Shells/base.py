@@ -42,43 +42,43 @@ class Base:
         except Exception:
             pass
 
-    def get_guid(self):
+    def getGuid(self):
         if self._guid is None:
             self._guid = str(uuid.uuid4())
         return self._guid
 
-    def get_type(self):
+    def getType(self):
         return self._shell_type
 
-    def is_init(self):
+    def isInit(self):
         return self._is_init
 
-    def is_term(self):
+    def isTerm(self):
         return self._is_term
 
-    def set_child(self, obj):
+    def setChild(self, obj):
         self._child_obj = obj
         return self
 
-    def get_child(self):
+    def getChild(self):
         return self._child_obj
 
-    def set_parent(self, obj):
+    def setParent(self, obj):
         self._parent_obj = obj
         return self
 
-    def get_parent(self):
+    def getParent(self):
         return self._parent_obj
 
-    def set_default_timeout(self, ms):
+    def setDefaultTimeout(self, ms):
         self._d_timeout = ms
         return self
 
-    def get_default_timeout(self):
+    def getDefaultTimeout(self):
         return self._d_timeout
 
     def terminate(self):
         raise NotImplementedError
 
-    def get_cmd(self, str_cmd=None, reg_exp=None, timeout=None):
+    def getCmd(self, str_cmd=None, reg_exp=None, timeout=None):
         raise NotImplementedError

@@ -14,27 +14,27 @@ class Termination(Base):
         # Writing chr(3) (Ctrl+C) through the pty is picked up by the tty
         # line discipline and turned into a real SIGINT for the foreground
         # process group - same trick the PHP original used.
-        cmd_obj = self.get_cmd(chr(3))
+        cmd_obj = self.getCmd(chr(3))
         if timeout is not None:
-            cmd_obj.set_timeout(timeout)
+            cmd_obj.setTimeout(timeout)
         cmd_obj.get(throw)
 
     def _issue_sig_quit(self, throw=True, timeout=None):
-        cmd_obj = self.get_cmd(chr(28))
+        cmd_obj = self.getCmd(chr(28))
         if timeout is not None:
-            cmd_obj.set_timeout(timeout)
+            cmd_obj.setTimeout(timeout)
         cmd_obj.get(throw)
 
     def _pid_running(self):
         base_pipes = getattr(self, "_base_pipes", None)
         if base_pipes is None:
             return False
-        return base_pipes.get_process().poll() is None
+        return base_pipes.getProcess().poll() is None
 
-    def is_base_term(self):
+    def isBaseTerm(self):
         # Figure out whether the base pipes / spawned bash process are still alive.
-        if self.get_parent() is not None:
-            return self.get_parent().is_base_term()
+        if self.getParent() is not None:
+            return self.getParent().isBaseTerm()
 
         if self._is_term is False and self._term_active is False:
             if self._pid_running():
@@ -47,10 +47,10 @@ class Termination(Base):
             try:
                 if self._is_init is True:
 
-                    if self.get_child() is not None:
-                        self.get_child().terminate()
+                    if self.getChild() is not None:
+                        self.getChild().terminate()
 
-                    if self.get_parent() is None:
+                    if self.getParent() is None:
                         # this is the base (root) shell
                         if self._pid_running():
                             # make sure the last command is dead, give it one
@@ -58,12 +58,12 @@ class Termination(Base):
                             # are shutting the whole shell down regardless
                             self._issue_sig_int(False, 1000)
 
-                            cmd_obj = self.get_cmd()
-                            cmd_obj.set_cmd("exit").set_delimitor(None).set_timeout(0)
+                            cmd_obj = self.getCmd()
+                            cmd_obj.setCmd("exit").setDelimitor(None).setTimeout(0)
                             cmd_obj.get(False)
 
                             base_pipes = getattr(self, "_base_pipes", None)
-                            proc = base_pipes.get_process() if base_pipes else None
+                            proc = base_pipes.getProcess() if base_pipes else None
                             if proc is not None:
                                 try:
                                     proc.wait(timeout=2)
@@ -83,14 +83,14 @@ class Termination(Base):
                         # exit back out to the parent shell's prompt
                         self._issue_sig_int(False)
 
-                        cmd_obj = self.get_cmd()
+                        cmd_obj = self.getCmd()
                         reg_ex = "(" + re.escape(self.get_parent().get_regex()) + ")"
-                        timeout = cmd_obj.get_timeout()
-                        cmd_obj.set_cmd("exit").set_delimitor(reg_ex).set_timeout(timeout)
+                        timeout = cmd_obj.getTimeout()
+                        cmd_obj.setCmd("exit").setDelimitor(reg_ex).setTimeout(timeout)
                         cmd_obj.get(False)
 
-                        self.get_parent().set_child(None)
-                        self.set_parent(None)
+                        self.getParent().setChild(None)
+                        self.setParent(None)
             finally:
                 self._is_term = True
                 self._term_active = False
