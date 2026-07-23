@@ -23,10 +23,10 @@ class Actions(Initialization):
             if self.is_term() is True:
                 raise RuntimeError("Cannot create command, shell is in terminated state")
 
-            # local import: avoids a circular import between the shells and
-            # commands packages (mirrors how the PHP autoloader resolves
+            # local import: avoids a circular import between the Shells and
+            # Commands packages (mirrors how the PHP autoloader resolves
             # \MTM\Shells\Models\Commands\Bash on demand)
-            from ...commands.bash import Bash as _BashCommand
+            from ...Commands.bash import Bash as _BashCommand
 
             r_obj = _BashCommand()
             r_obj.set_parent(self).set_cmd(str_cmd).set_commit(self.get_commit())

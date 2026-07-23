@@ -98,7 +98,7 @@ class Bash(Base):
                 for l_key, line in enumerate(lines):
 
                     if p_init is True and term_width is not None and len(line) >= term_width:
-                        # locate terminal breaks in very long, wrapped commands
+                        # locate terminal breaks in very long, wrapped Commands
                         o_index = 0
                         c_index = 0
                         n_line = ""

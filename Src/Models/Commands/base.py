@@ -108,7 +108,7 @@ class Base:
         return self
 
     def read_once(self):
-        """Helpful when running many shells and checking if a command is finished."""
+        """Helpful when running many Shells and checking if a command is finished."""
         if self._is_done is False:
             if self._is_exec is False:
                 self.exec()
