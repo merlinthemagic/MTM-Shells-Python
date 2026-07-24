@@ -128,7 +128,7 @@ class Initialization(Processing):
 					pass
 
 			# make the master fd non-blocking so read() never stalls
-			flags = fcntl.fcntl(master_fd, fcntl.F_GETFL)
+			flags	= fcntl.fcntl(master_fd, fcntl.F_GETFL)
 			fcntl.fcntl(master_fd, fcntl.F_SETFL, flags | os.O_NONBLOCK)
 
 			self._base_pipes = ProcessPipe(master_fd, process)

@@ -32,9 +32,9 @@ class Processing(Termination):
 			try:
 				exe_cmd = cmd_obj.getCmd() + cmd_obj.getCommit()
 				self.getPipes().write(exe_cmd)
-			except Exception:
+			except RuntimeError as e:
 				# stdIn went away - not sure if the remote side is responsible
-				cmd_obj.setError(RuntimeError("Shell was terminated"))
+				cmd_obj.setError(RuntimeError("Shell was terminated", 44733))
 				self.terminate()
 
 	def _raw_read(self, cmd_obj):
@@ -42,7 +42,10 @@ class Processing(Termination):
 			data = self.getPipes().read()
 			if data != "":
 				cmd_obj.addData(data)
-		except RuntimeError:
+		except RuntimeError as e:
 			# stdOut went away - not sure if the remote side is responsible
-			cmd_obj.setError(RuntimeError("Shell was terminated"))
+			##TODO: figure out how to get the error. e.g. on SSH login with a wrong password
+			##the file is removed and rather than a meaningful error e.g. Permission denied
+			##we just push the below generic exception upstream
+			cmd_obj.setError(RuntimeError("Shell was terminated", 44734))
 			self.terminate()

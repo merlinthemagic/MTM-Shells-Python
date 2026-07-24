@@ -5,9 +5,9 @@ import os
 class ProcessPipe:
 
 	def __init__(self, master_fd, process):
-		self._master_fd = master_fd
-		self._process = process  # subprocess.Popen handle for the spawned bash
-		self._lock = True		# kept for API parity with the PHP lock file
+		self._master_fd		= master_fd
+		self._process		= process  # subprocess.Popen handle for the spawned bash
+		self._lock			= True # kept for API parity with the PHP lock file
 
 	def getLock(self):
 		return self._lock
