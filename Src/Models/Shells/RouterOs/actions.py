@@ -3,7 +3,6 @@ import re
 
 from .initialization import Initialization
 
-
 class Actions(Initialization):
 
 	_shell_type = "routeros"
