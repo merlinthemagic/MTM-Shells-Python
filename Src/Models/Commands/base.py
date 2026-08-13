@@ -27,7 +27,7 @@ class Base:
 
 	def getGuid(self):
 		if self._guid is None:
-			self._guid = str(uuid.uuid4())
+			self._guid = str(uuid.uuid4()).upper();
 		return self._guid
 
 	def setParent(self, obj):
