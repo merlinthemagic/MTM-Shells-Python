@@ -12,15 +12,15 @@ class Base:
 			# equivalent so we enforce it at construction time instead.
 			raise TypeError("Base is abstract and cannot be instantiated directly")
 
-		self._guid = None
-		self._parent_obj = None	# shell that this instance is built on top of
-		self._child_obj = None	 # shell built on top of this instance
-		self._cmd_obj = None	   # currently executing command
-		self._d_timeout = 25000	# default command timeout, in ms
-		self._is_init = False	  # shell has been fully set up
-		self._is_term = False	  # shell is terminated
-		self._init_active = False  # init is in progress
-		self._term_active = False  # termination is in progress
+		self._guid			= None
+		self._parent_obj	= None	# shell that this instance is built on top of
+		self._child_obj		= None	 # shell built on top of this instance
+		self._cmd_obj		= None	   # currently executing command
+		self._d_timeout		= 25000	# default command timeout, in ms
+		self._is_init		= False	  # shell has been fully set up
+		self._is_term		= False	  # shell is terminated
+		self._init_active	= False  # init is in progress
+		self._term_active	= False  # termination is in progress
 
 		# __del__ is not guaranteed to run on interpreter/process teardown
 		# (e.g. os._exit, unhandled signals). PHP's register_shutdown_function

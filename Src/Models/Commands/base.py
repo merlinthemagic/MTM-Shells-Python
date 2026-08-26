@@ -9,21 +9,21 @@ class Base:
 		if type(self) is Base:
 			raise TypeError("Base is abstract and cannot be instantiated directly")
 
-		self._guid = None
-		self._is_exec = False
-		self._is_running = False
-		self._is_done = False
-		self._parent_obj = None
-		self._str_cmd = None
-		self._find_cmd = True  # set False when the return won't include the command, e.g. password logins
-		self._reg_exp = None
-		self._commit = None
-		self._exec_time = None
-		self._init_time = None
-		self._done_time = None
-		self._timeout = 25000
-		self._data = ""
-		self._error = None
+		self._guid			= None
+		self._is_exec		= False
+		self._is_running	= False
+		self._is_done		= False
+		self._parent_obj	= None
+		self._str_cmd		= None
+		self._find_cmd		= True  # set False when the return won't include the command, e.g. password logins
+		self._reg_exp		= None
+		self._commit		= None
+		self._exec_time		= None
+		self._init_time		= None
+		self._done_time		= None
+		self._timeout		= 25000
+		self._data			= ""
+		self._error			= None
 
 	def getGuid(self):
 		if self._guid is None:
@@ -79,7 +79,6 @@ class Base:
 		return self._is_running
 
 	def getRunTime(self):
-		"""Returns elapsed run time in milliseconds."""
 		if self._init_time is not None:
 			if self.getIsDone() is False:
 				return (time.time() - self._init_time) * 1000

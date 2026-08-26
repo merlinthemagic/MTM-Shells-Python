@@ -3,7 +3,6 @@ import re
 
 from .base import Base
 
-
 class RouterOs(Base):
 
 	def __init__(self):
