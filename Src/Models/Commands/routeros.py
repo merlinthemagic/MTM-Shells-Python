@@ -12,18 +12,23 @@ class RouterOs(Base):
 	def _check_data(self):
 		delim = self.getDelimitor()
 		# we handle newlines as well via re.S (equivalent of PHP's /s modifier)
-		if (
-			delim
-			and re.search("(.*)?(" + delim + ")", self.getData(), re.S) is not None  # too costly to check return data on every read, just do raw for starters
-			and (self.getFindCommand() is False or self._cmd_found() is True)
-			and re.search(delim, self.getReturnData(), re.S) is not None
-		):
-			self.setDone()
-
+		
+		
+		if delim:
+			##tricky, if the return is streaming we can miss the delimitor
+			##but some of the returns are way too large for the regex engine. We have to protect it
+			raw		= self.getData()[((len(delim) * 5) * -1):];
+			if (
+				re.search("(.*)?(" + delim + ")", raw, re.S) is not None  # too costly to check return data on every read, just do raw for starters
+				and (self.getFindCommand() is False or self._cmd_found() is True)
+				and re.search(delim, self.getReturnData(), re.S) is not None
+			):
+				self.setDone();
+			
 		if self.getIsDone() is False and self.getRunTime() > self.getTimeout():
 			if not delim:
 				# we wanted to read until time ran out
-				self.setDone()
+				self.setDone();
 			else:
 				self.setError(RuntimeError("RouterOS: Command read timeout"))
 
