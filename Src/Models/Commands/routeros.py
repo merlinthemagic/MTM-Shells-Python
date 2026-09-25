@@ -77,6 +77,15 @@ class RouterOs(Base):
 						# in v6 each new command char results in a new line + break + "[K" + new char
 						# dont trim anything else. If we do a blanket left trim we lose more than the command
 						lines[0] = lines[0][2:]
+						
+#					if len(lines) > 0:
+#						line		= lines[0];
+#						cmd_pos		= line.rfind(str_cmd);
+#						if cmd_pos != -1:
+#							##command was doubled, seems to happen with beta releases, something in the terminal is different
+#							##this happens when the terminal is too narrow. on beta the username change does not seem to have an effect
+#							
+#							lines[0]	= line[cmd_pos + len(str_cmd):]	
 					break
 		if as_str is True:
 			return "\n".join(lines)
